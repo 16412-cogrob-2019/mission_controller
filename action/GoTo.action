@@ -1,0 +1,10 @@
+# Define the goal
+float64 x
+float64 y
+float64 vel
+---
+# Define the result
+bool arrived
+---
+# Define a feedback message
+float32 percent_complete

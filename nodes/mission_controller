@@ -1,0 +1,15 @@
+#! /usr/bin/env python
+
+import roslib
+import rospy
+from mission_controller import TurtlebotServer
+
+
+if __name__ == '__main__':
+	rospy.init_node('mission_controller')
+
+	tb_server = TurtlebotServer()
+
+    print("mission controller ready!")
+
+	rospy.spin()
