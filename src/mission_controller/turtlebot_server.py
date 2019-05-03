@@ -25,32 +25,34 @@ class TurtlebotServer:
         "args: (x, y, vel)"
 
         print("Going to point {}, {} with speed {}".format(goal.x, goal.y, goal.vel))
-        #cancel any activities that were currently being acheived by robot
-        self.goal_cancel_client.publish(GoalID())
 
-        #set the velocity parameters
-        rospy.set_param('/move_base/DWAPlannerROS/min_trans_vel', goal.vel)
-        rospy.set_param('/move_base/DWAPlannerROS/max_trans_vel', goal.vel)
+        rospy.sleep(3)
+        # #cancel any activities that were currently being acheived by robot
+        # self.goal_cancel_client.publish(GoalID())
 
-        #create move_base action
-        action_goal = MoveBaseGoal()
-        action_goal.target_pose.header.frame_id = "map"
-        action_goal.target_pose.header.stamp = rospy.Time.now()
-        action_goal.target_pose.pose.position.x = goal.x
-        action_goal.target_pose.pose.position.y = goal.y
-        action_goal.target_pose.pose.position.z = 0
-        quaternion = tf.transformations.quaternion_from_euler(0, 0, 0) #TODO needs to be something useful
-        action_goal.target_pose.pose.orientation.x = quaternion[0]
-        action_goal.target_pose.pose.orientation.y = quaternion[1]
-        action_goal.target_pose.pose.orientation.z = quaternion[2]
-        action_goal.target_pose.pose.orientation.w = quaternion[3]
-        self.goal_client.send_goal(action_goal) # send goal to turtlebot
+        # #set the velocity parameters
+        # rospy.set_param('/move_base/DWAPlannerROS/min_trans_vel', goal.vel)
+        # rospy.set_param('/move_base/DWAPlannerROS/max_trans_vel', goal.vel)
 
-        self.goal_client.wait_for_result()
+        # #create move_base action
+        # action_goal = MoveBaseGoal()
+        # action_goal.target_pose.header.frame_id = "map"
+        # action_goal.target_pose.header.stamp = rospy.Time.now()
+        # action_goal.target_pose.pose.position.x = goal.x
+        # action_goal.target_pose.pose.position.y = goal.y
+        # action_goal.target_pose.pose.position.z = 0
+        # quaternion = tf.transformations.quaternion_from_euler(0, 0, 0) #TODO needs to be something useful
+        # action_goal.target_pose.pose.orientation.x = quaternion[0]
+        # action_goal.target_pose.pose.orientation.y = quaternion[1]
+        # action_goal.target_pose.pose.orientation.z = quaternion[2]
+        # action_goal.target_pose.pose.orientation.w = quaternion[3]
+        # self.goal_client.send_goal(action_goal) # send goal to turtlebot
+
+        # self.goal_client.wait_for_result()
         print("Arrived!")
 
         self._result_goto.arrived = True
-        self.server.set_succeeded(self._result_goto.arrived)
+        self.server.set_succeeded(self._result_goto)
         
 
         

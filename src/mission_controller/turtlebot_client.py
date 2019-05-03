@@ -20,7 +20,7 @@ class TurtlebotClient: #This will likely have to spawn multiple clients
         """
         Data - waypoint tuple (x, y, vel) TODO update for sequence
         """
-        goal = GoToAction(x=data[0], y=data[1], vel=data[2])
+        goal = GoToGoal(data[0], data[1], data[2])
 
         self.client.send_goal(goal, done_cb=self.post_result)
 
@@ -28,14 +28,12 @@ class TurtlebotClient: #This will likely have to spawn multiple clients
 
         return True
 
-    def post_goal(self):
+    def post_result(self, status, result):
 
         print("Goal completed.")
 
-        res = self.client.get_result()
-
         #add to list of results
-        self.results.append(res)
+        self.results.append(result)
 
         return
 

@@ -1,0 +1,7 @@
+activity_id: 1
+activity_name: "test_goto"
+plns:
+  - wypts:
+      - x: 0.0
+        y: 2.0
+        vel: 0.3

@@ -19,14 +19,12 @@ class Dispatcher:
     def dispatch_activity(self, msg):
         #publish that you have recieved and are starting the activity
         start_msg = ActivityStart(activity_id=msg.activity_id, activity_name=msg.activity_name)
-        start_pub.publish(start_msg)
+        self.start_pub.publish(start_msg)
         print("Received activity {}".format(msg.activity_name))
 
         num_turtlbots = len(msg.plns)
 
         results = []
-        pts = msg.tb1_plan.wypts
-        goal_data = (pts.x, pts.y, pts.vel)
 
         for plan in msg.plns:
             goal_data = (plan.wypts[0].x, plan.wypts[0].y, plan.wypts[0].vel) ##TODO NEEDS TO CHANGE
@@ -38,9 +36,10 @@ class Dispatcher:
 
         print("Completed acitivity {}".format(msg.activity_name))
 
-        results = list(map(float,x))
-        done_msg = ActivityStart(activity_id=msg.activity_id, activity_name=msg.activity_name, samples=results)
-        done_pub
+        results = [item.arrived for item in results]
+        results = list(map(float,results)) ## REMOVE
+        done_msg = ActivityDone(activity_id=msg.activity_id, activity_name=msg.activity_name, samples=results)
+        self.done_pub.publish(done_msg)
 
 
         return    

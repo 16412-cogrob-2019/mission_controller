@@ -6,10 +6,10 @@ from mission_controller import TurtlebotServer
 
 
 if __name__ == '__main__':
-	rospy.init_node('mission_controller')
+    rospy.init_node('mission_controller')
 
-	tb_server = TurtlebotServer()
+    tb_server = TurtlebotServer()
 
     print("mission controller ready!")
 
-	rospy.spin()
+    rospy.spin()
