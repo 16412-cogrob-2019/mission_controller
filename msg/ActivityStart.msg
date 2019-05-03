@@ -1,1 +1,2 @@
+uint32 activity_id
 string activity_name

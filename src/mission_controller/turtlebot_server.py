@@ -9,8 +9,8 @@ from actionlib_msgs.msg import GoalID
 from mission_controller.msg import GoToAction, GoToResult
 
 class TurtlebotServer:
-
     _result_goto = GoToResult()
+    
 
     def __init__(self):
         self.server = actionlib.SimpleActionServer('mission_controller', GoToAction, self.go_to, False)

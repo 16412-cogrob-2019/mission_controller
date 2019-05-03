@@ -1,0 +1,56 @@
+#! /usr/bin/env python
+
+import roslib
+import rospy
+from mission_controller import TurtlebotClient
+
+from mission_controller.msg import ActivityDone, ActivityRequest, ActivityStart
+
+class Dispatcher:
+
+    def __init__(self):
+
+        self.sub = rospy.Subscriber('activity/post', ActivityRequest, self.dispatch_activity)
+
+        self.start_pub = rospy.Publisher('activity/start', ActivityStart, queue_size=10)
+        self.done_pub = rospy.Publisher('activity/done', ActivityDone, queue_size=10)
+
+
+    def dispatch_activity(self, msg):
+        #publish that you have recieved and are starting the activity
+        start_msg = ActivityStart(activity_id=msg.activity_id, activity_name=msg.activity_name)
+        start_pub.publish(start_msg)
+        print("Received activity {}".format(msg.activity_name))
+
+        num_turtlbots = len(msg.plns)
+
+        results = []
+        pts = msg.tb1_plan.wypts
+        goal_data = (pts.x, pts.y, pts.vel)
+
+        for plan in msg.plns:
+            goal_data = (plan.wypts[0].x, plan.wypts[0].y, plan.wypts[0].vel) ##TODO NEEDS TO CHANGE
+            TurtlebotClient(results).connect_client(goal_data)
+
+        print("Waiting for turltebots to execute plans...")
+        while len(results) < num_turtlbots:
+            pass
+
+        print("Completed acitivity {}".format(msg.activity_name))
+
+        results = list(map(float,x))
+        done_msg = ActivityStart(activity_id=msg.activity_id, activity_name=msg.activity_name, samples=results)
+        done_pub
+
+
+        return    
+
+
+
+if __name__ == '__main__':
+    rospy.init_node('activity_dispatcher')
+
+    activity_dispatcher = Dispatcher()
+    print("Dispatcher ready!")
+
+    rospy.spin()

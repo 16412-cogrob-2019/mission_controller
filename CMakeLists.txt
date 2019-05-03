@@ -57,6 +57,9 @@ add_message_files(
    FILES
    ActivityStart.msg
    ActivityDone.msg
+   ActivityRequest.msg
+   Plan.msg
+   Waypoint.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -164,6 +167,7 @@ include_directories(
 ## in contrast to setup.py, you can choose the destination
 install(PROGRAMS 
 		nodes/mission_controller
+    nodes/activity_dispatcher
 		DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ## Mark executables and/or libraries for installation
