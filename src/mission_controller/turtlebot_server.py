@@ -26,7 +26,8 @@ class TurtlebotServer:
 
         print("Going to point {}, {} with speed {}".format(goal.x, goal.y, goal.vel))
 
-        rospy.sleep(3)
+        rospy.sleep(3) #USE ME ALONE TO TEST PIPELINE
+
         # #cancel any activities that were currently being acheived by robot
         # self.goal_cancel_client.publish(GoalID())
 
