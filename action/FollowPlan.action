@@ -1,0 +1,8 @@
+#Sequence of waypoints as defined in Waypoint.msg
+Waypoint[] plan
+---
+# Define the result
+bool arrived
+---
+# Define a feedback message
+float32 percent_complete

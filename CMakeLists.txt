@@ -70,7 +70,7 @@ add_message_files(
 # )
 
 ## Generate actions in the 'action' folder
-add_action_files(DIRECTORY action FILES GoTo.action)
+add_action_files(DIRECTORY action FILES FollowPlan.action GoTo.action)
 
 
 ## Generate added messages and services with any dependencies listed here

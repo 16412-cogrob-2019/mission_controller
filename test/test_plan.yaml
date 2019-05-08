@@ -1,0 +1,10 @@
+activity_id: 17
+activity_name: "test_plan"
+plns:
+  - wypts:
+      - x: 0.0
+        y: 2.0
+        vel: 0.1
+      - x: 1.0
+        y: 4.0
+        vel: 0.2

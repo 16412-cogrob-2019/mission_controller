@@ -27,8 +27,8 @@ class Dispatcher:
         results = []
 
         for plan in msg.plns:
-            goal_data = (plan.wypts[0].x, plan.wypts[0].y, plan.wypts[0].vel) ##TODO NEEDS TO CHANGE
-            TurtlebotClient(results).connect_client(goal_data)
+            #goal_data = (plan.wypts[0].x, plan.wypts[0].y, plan.wypts[0].vel) ##TODO NEEDS TO CHANGE
+            TurtlebotClient(results).connect_client(plan)
 
         print("Waiting for turltebots to execute plans...")
         while len(results) < num_turtlbots:
