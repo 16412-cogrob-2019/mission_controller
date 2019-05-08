@@ -121,16 +121,17 @@ class TurtlebotServer:
             samp_val = caldera_sim_function(*samp_loc)
             print(self.ns_print + "Sampled value {}.".format(samp_val))
             self._result_plan.sample = samp_val
-
+            self._result_plan.sample_x_loc = samp_loc[0]
+            self._result_plan.sample_y_loc = samp_loc[1]
 	          
 
-        print("Done executing plan!")
+            print("Done executing plan!")
 
         else:
             self._result_plan.sample = 0.0
       
-        self._result_plan.sample_x_loc = samp_loc[0]
-        self._result_plan.sample_y_loc = samp_loc[1]	
+            self._result_plan.sample_x_loc = 0.0
+            self._result_plan.sample_y_loc = 0.0
 
         if plan.plan:   
             print(self.ns_print + "Done executing plan!")
