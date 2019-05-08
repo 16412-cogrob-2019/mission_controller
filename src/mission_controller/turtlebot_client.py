@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+
 import rospy
 import actionlib
 
@@ -25,6 +27,7 @@ class TurtlebotClient: #This will likely have to spawn multiple clients
         """
         Data - waypoint tuple (x, y, vel) TODO update for sequence
         """
+
         if self.plan:
             goal = FollowPlanGoal(data.wypts)
         else:

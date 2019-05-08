@@ -6,11 +6,24 @@ from geometry_msgs.msg import Twist, PoseStamped
 from move_base_msgs.msg import MoveBaseGoal, MoveBaseAction
 from actionlib_msgs.msg import GoalID
 import dynamic_reconfigure.client
+import numpy as np
+import matplotlib.mlab as mlab
 
 from mission_controller.msg import GoToAction, GoToResult, FollowPlanAction, FollowPlanResult
 
 
 MAX_SPEED = 0.22
+
+def simple_sample():
+    return float('%.4f'%np.random.rand())
+
+def caldera_sim_function(x, y):
+    x, y = x / 10.0, y / 10.0
+    z0 = mlab.bivariate_normal(x, y, 10.0, 5.0, 5.0, 0.0)
+    z1 = mlab.bivariate_normal(x, y, 1.0, 2.0, 2.0, 5.0)
+    z2 = mlab.bivariate_normal(x, y, 1.7, 1.7, 8.0, 8.0)
+    return 50000.0 * z0 + 2500.0 * z1 + 5000.0 * z2
+
 
 class TurtlebotServer:
     _result_goto = GoToResult()
@@ -92,6 +105,15 @@ class TurtlebotServer:
                 continue
             else:
                 break
+
+        samp_loc = (plan.plan[-1].x, plan.plan[-1].y)
+        if self.sampling:
+            print("Arrived at sample location. Sampling...")
+            rospy.sleep(3)
+            samp_val = caldera_sim_function(*samp_loc)
+            print("Sampled value {}.".format(samp_val))
+            self._result_plan.sample = samp_val
+
 
         print("Done executing plan!")
         self._result_plan.arrived = nav_goal

@@ -36,7 +36,7 @@ class Dispatcher:
 
         print("Completed acitivity {}".format(msg.activity_name))
 
-        results = [item.arrived for item in results]
+        results = [item.sample for item in results]
         results = list(map(float,results)) ## REMOVE
         done_msg = ActivityDone(activity_id=msg.activity_id, activity_name=msg.activity_name, samples=results)
         self.done_pub.publish(done_msg)

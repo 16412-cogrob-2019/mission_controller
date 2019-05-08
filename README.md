@@ -44,7 +44,7 @@ rospy.get_param("agents")
 To run the `activity_dispatcher` node:
 
 ```
-rosrun activity_dispatcher activity_dispatcher
+rosrun mission_controller activity_dispatcher
 ```
 
 
