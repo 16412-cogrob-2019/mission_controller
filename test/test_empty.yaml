@@ -1,0 +1,4 @@
+activity_id: 0
+activity_name: "test_empty"
+plns:
+  - wypts: []

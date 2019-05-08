@@ -3,6 +3,7 @@
 import roslib
 import rospy
 from mission_controller import TurtlebotClient
+import numpy as np
 
 from mission_controller.msg import ActivityDone, ActivityRequest, ActivityStart
 
@@ -22,13 +23,17 @@ class Dispatcher:
         self.start_pub.publish(start_msg)
         print("Received activity {}".format(msg.activity_name))
 
-        num_turtlbots = len(msg.plns)
+        tbs = rospy.get_param("/mission_controller/agents")
+        num_turtlbots = len(tbs)
 
-        results = []
+        if len(tbs) != len(msg.plns):
+            raise Exception("Number of plans in the activity and the number of agents doesn't match!")
 
-        for plan in msg.plns:
+        results = dict()
+
+        for tb, plan in zip(tbs, msg.plns):
             #goal_data = (plan.wypts[0].x, plan.wypts[0].y, plan.wypts[0].vel) ##TODO NEEDS TO CHANGE
-            TurtlebotClient(results).connect_client(plan)
+            TurtlebotClient(results, ns=tb).connect_client(plan)
 
         print("Waiting for turltebots to execute plans...")
         while len(results) < num_turtlbots:
@@ -36,13 +41,15 @@ class Dispatcher:
 
         print("Completed acitivity {}".format(msg.activity_name))
 
-        results = [item.sample for item in results]
-        results = list(map(float,results)) ## REMOVE
-        done_msg = ActivityDone(activity_id=msg.activity_id, activity_name=msg.activity_name, samples=results)
+        result_list = list(np.zeros(num_turtlbots))
+        for i, tb in enumerate(tbs):
+            result_list[i] = results[tb].sample
+
+        done_msg = ActivityDone(activity_id=msg.activity_id, activity_name=msg.activity_name, samples=result_list)
         self.done_pub.publish(done_msg)
 
 
-        return    
+        return
 
 
 

@@ -8,15 +8,18 @@ from mission_controller.msg import GoToAction, GoToGoal, FollowPlanAction, Follo
 
 class TurtlebotClient: #This will likely have to spawn multiple clients
 
-    def __init__(self, results, plan=True):
+    def __init__(self, results, ns= "", plan=True):
         self.plan = True
+        self.ns = ns
+        self.ns_print = self.ns +": " if self.ns != "" else ""
         if plan:
-            self.client = actionlib.SimpleActionClient('mission_controller', FollowPlanAction)
+            self.client = actionlib.SimpleActionClient(self.ns+'/mission_controller', FollowPlanAction)
         else:               
-            self.client = actionlib.SimpleActionClient('mission_controller', GoToAction)
+            self.client = actionlib.SimpleActionClient(self.ns+'/mission_controller', GoToAction)
 
         self.client.wait_for_server()
         self.results = results
+
 
         # self.dispatch_sub = rospy.Subscriber('/mission_activities', )
 
@@ -27,6 +30,8 @@ class TurtlebotClient: #This will likely have to spawn multiple clients
         """
         Data - waypoint tuple (x, y, vel) TODO update for sequence
         """
+        
+
 
         if self.plan:
             goal = FollowPlanGoal(data.wypts)
@@ -41,10 +46,10 @@ class TurtlebotClient: #This will likely have to spawn multiple clients
 
     def post_result(self, status, result):
 
-        print("Goal completed.")
+        print(self.ns_print + "Goal completed.")
 
         #add to list of results
-        self.results.append(result)
+        self.results[self.ns] = result
 
         return
 
