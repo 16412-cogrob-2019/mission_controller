@@ -37,7 +37,7 @@ rosparam get /mission_controller/agents
 or from Python code (it will return a list of strings or an empty list):
 
 ```
-rospy.get_param("agents")
+rospy.get_param("/mission_controller/agents")
 ```
 
 ### Acticity Dispatcher

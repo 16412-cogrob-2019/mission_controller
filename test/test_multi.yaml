@@ -1,0 +1,17 @@
+activity_id: 8
+activity_name: "test_multi"
+plns:
+  - wypts:
+      - x: 0.0
+        y: 2.0
+        vel: 0.1
+      - x: 1.0
+        y: 4.0
+        vel: 0.2
+  - wypts:
+      - x: 7.0
+        y: 6.0
+        vel: 0.1
+      - x: 0.0
+        y: 3.0
+        vel: 0.05    
