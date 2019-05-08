@@ -113,7 +113,9 @@ class TurtlebotServer:
             samp_val = caldera_sim_function(*samp_loc)
             print("Sampled value {}.".format(samp_val))
             self._result_plan.sample = samp_val
-
+	    # SARAH - added location 
+	    self._result_plan.sample_x_loc = samp_loc[0]
+            self._result_plan.sample_y_loc = samp_loc[1]	
 
         print("Done executing plan!")
         self._result_plan.arrived = nav_goal

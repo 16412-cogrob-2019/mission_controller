@@ -36,9 +36,13 @@ class Dispatcher:
 
         print("Completed acitivity {}".format(msg.activity_name))
 
-        results = [item.sample for item in results]
-        results = list(map(float,results)) ## REMOVE
-        done_msg = ActivityDone(activity_id=msg.activity_id, activity_name=msg.activity_name, samples=results)
+        sampled_results = [item.sample for item in results]
+	x_vals_results  = [item.sample_x_loc for item in results]
+        y_vals_results  = [item.sample_y_loc for item in results]
+
+
+        sampled_results = list(map(float,sampled_results)) ## REMOVE
+        done_msg = ActivityDone(activity_id=msg.activity_id, activity_name=msg.activity_name, samples=sampled_results, x_vals=x_vals_results, y_vals=y_vals_results )
         self.done_pub.publish(done_msg)
 
 

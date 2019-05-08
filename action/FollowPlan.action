@@ -4,6 +4,8 @@ Waypoint[] plan
 # Define the result
 bool arrived
 float64 sample
+float64 sample_x_loc
+float64 sample_y_loc 
 ---
 # Define a feedback message
 float32 percent_complete
