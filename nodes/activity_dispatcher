@@ -42,10 +42,14 @@ class Dispatcher:
         print("Completed acitivity {}".format(msg.activity_name))
 
         result_list = list(np.zeros(num_turtlbots))
+        x_vals = list(np.zeros(num_turtlbots))
+        y_vals = list(np.zeros(num_turtlbots))
         for i, tb in enumerate(tbs):
             result_list[i] = results[tb].sample
+            x_vals[i] = results[tb].sample_x_loc
+            y_vals[i] = results[tb].sample_y_loc
 
-        done_msg = ActivityDone(activity_id=msg.activity_id, activity_name=msg.activity_name, samples=result_list)
+        done_msg = ActivityDone(activity_id=msg.activity_id, activity_name=msg.activity_name, samples=result_list, x_vals=x_vals, y_vals=y_vals)
         self.done_pub.publish(done_msg)
 
 
