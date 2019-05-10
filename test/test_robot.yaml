@@ -1,10 +1,10 @@
 activity_id: 5
 activity_name: "test_robot"
 plns:
-  - wypts: []
-      # - x: 0.29
-      #   y: -1.8
-      #   vel: 0.2
+  - wypts:
+      - x: 0.2
+        y: 0.00
+        vel: 0.2
       # - x: 0.27
       #   y: 0.009
       #   vel: 0.2
