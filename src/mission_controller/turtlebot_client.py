@@ -37,7 +37,7 @@ class TurtlebotClient: #This will likely have to spawn multiple clients
         """
         
 
-
+        
         if self.plan:
             goal = FollowPlanGoal(data.wypts)
         else:

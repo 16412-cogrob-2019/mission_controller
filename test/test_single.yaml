@@ -1,0 +1,10 @@
+activity_id: 8
+activity_name: "test_single"
+plns:
+  - wypts:
+      - x: 0.84
+        y: -1.34
+        vel: 0.1
+      - x: 0.146
+        y: -2.086
+        vel: 0.2
