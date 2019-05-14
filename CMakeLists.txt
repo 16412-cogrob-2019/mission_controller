@@ -60,7 +60,7 @@ add_message_files(
    ActivityRequest.msg
    Plan.msg
    Waypoint.msg
-   Sample.msg
+   CollectedSample.msg
  )
 
 ## Generate services in the 'srv' folder

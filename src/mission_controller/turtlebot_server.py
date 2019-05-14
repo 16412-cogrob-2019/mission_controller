@@ -2,7 +2,7 @@
 
 import rospy
 import actionlib
-from geometry_msgs.msg import Twist, PoseStamped
+from geometry_msgs.msg import Twist, PoseStamped, PoseWithCovarianceStamped
 from move_base_msgs.msg import MoveBaseGoal, MoveBaseAction
 from actionlib_msgs.msg import GoalID
 import dynamic_reconfigure.client
@@ -45,6 +45,7 @@ class TurtlebotServer:
         self.vel_pub = rospy.Publisher(self.ns+'/cmd_vel', Twist, queue_size=10)
         self.goal_client = actionlib.SimpleActionClient(self.ns+"/move_base", MoveBaseAction)
         self.goal_cancel_client = rospy.Publisher(self.ns+'/move_base/cancel', GoalID, queue_size=10)
+
 
 
         self.server.start()
@@ -114,7 +115,9 @@ class TurtlebotServer:
 
         
         if self.sampling and plan.plan:
-            samp_loc = (plan.plan[-1].x, plan.plan[-1].y)
+            robot_pos = rospy.wait_for_message(self.ns+"/amcl_pose", PoseWithCovarianceStamped)
+            #samp_loc = (plan.plan[-1].x, plan.plan[-1].y)
+            samp_loc = (robot_pos.pose.pose.position.x, robot_pos.pose.pose.position.y)
             print(self.ns_print + "Arrived at sample location. Sampling...")
             rospy.sleep(3)
             samp_val = caldera_sim_function(*samp_loc)

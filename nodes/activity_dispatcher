@@ -5,7 +5,7 @@ import rospy
 from mission_controller import TurtlebotClient
 import numpy as np
 
-from mission_controller.msg import ActivityDone, ActivityRequest, ActivityStart, Sample
+from mission_controller.msg import ActivityDone, ActivityRequest, ActivityStart, CollectedSample
 
 class Dispatcher:
 
@@ -16,7 +16,7 @@ class Dispatcher:
         self.start_pub = rospy.Publisher('activity/start', ActivityStart, queue_size=10)
         self.done_pub = rospy.Publisher('activity/done', ActivityDone, queue_size=10)
 
-	self.sub = rospy.Subscriber('/sample_report', Sample, self.update_results)
+	self.sub = rospy.Subscriber('/sample_report', CollectedSample, self.update_results)
 
 	# SARAH: initialize the dict  
         self.results = dict()

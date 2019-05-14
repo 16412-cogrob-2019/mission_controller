@@ -1,0 +1,27 @@
+<launch>
+    <arg name="multi" default="false"/>
+    <arg name="ns1" default="tb3_0"/>
+    <arg name="ns2" default="tb3_0"/>
+
+    <!-- Launch navigation and map for first turtlebot -->
+    <include file="$(find turtlebot3_navigation)/launch/turtlebot3_mapserver.launch">
+        <arg name="ns" value="$(arg ns1)"/>
+        <arg name="map_file" value="/home/mers/gc_map2.yaml"/>
+    </include>
+    <include file="$(find turtlebot3_navigation)/launch/turtlebot3_navigation_multi_w_remote.launch">
+        <arg name="ns" value="$(arg ns1)"/>
+    </include>
+
+    <group if="$(arg multi)">
+        <include file="$(find turtlebot3_navigation)/launch/turtlebot3_mapserver.launch">
+            <arg name="ns" value="$(arg ns2)"/>
+            <arg name="map_file" value="/home/mers/gc_map2.yaml"/>
+        </include>
+        <include file="$(find turtlebot3_navigation)/launch/turtlebot3_navigation_multi_w_remote.launch">
+            <arg name="ns" value="$(arg ns2)"/>
+        </include>
+    </group>
+
+
+
+</launch>
