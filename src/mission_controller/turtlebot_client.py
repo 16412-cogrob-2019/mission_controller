@@ -3,12 +3,12 @@
 import rospy
 import actionlib
 
-from mission_controller.msg import GoToAction, GoToGoal, FollowPlanAction, FollowPlanGoal
+from mission_controller.msg import GoToAction, GoToGoal, FollowPlanAction, FollowPlanGoal, Sample
 
 
 class TurtlebotClient: #This will likely have to spawn multiple clients
 
-    def __init__(self, results, ns= "", plan=True):
+    def __init__(self, ns= "", plan=True):
         self.plan = True
         self.ns = ns
         self.ns_print = self.ns +": " if self.ns != "" else ""
@@ -18,13 +18,18 @@ class TurtlebotClient: #This will likely have to spawn multiple clients
             self.client = actionlib.SimpleActionClient(self.ns+'/mission_controller', GoToAction)
 
         self.client.wait_for_server()
-        self.results = results
 
+	# SARAH        
+	#self.results = results
+     
+        self.sample_pub = rospy.Publisher('/sample_report', Sample, queue_size=10)
 
-        # self.dispatch_sub = rospy.Subscriber('/mission_activities', )
+	# not SARAH
+	# self.dispatch_sub = rospy.Subscriber('/mission_activities', )
 
         # self.activity_pub_start = rospy.Publisher('/mission_activities', ActivityStart)
         # self.activity_pub_end = rospy.Publisher('/mission_activities', ActivityEnd)
+
 
     def connect_client(self, data):
         """
@@ -49,7 +54,15 @@ class TurtlebotClient: #This will likely have to spawn multiple clients
         print(self.ns_print + "Goal completed.")
 
         #add to list of results
-        self.results[self.ns] = result
+	#SARAH: changing this to sending a message with the sample         
+	#self.results[self.ns] = result
+        agent_id = self.ns
+	x = result.sample_x_loc
+	y = result.sample_y_loc
+	val = result.sample
+        sample = Sample(agent_id,x,y,val)
+        self.sample_pub.publish(sample)
+        
 
         return
 

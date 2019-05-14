@@ -103,9 +103,8 @@ class TurtlebotServer:
             print(self.ns_print + "Going to point {}, {} with speed {}".format(waypt.x, waypt.y, min(MAX_SPEED, waypt.vel))) #TODO change to easier messages
 
             ##DEBUGGING
-            #rospy.sleep(2)
-            #nav_goal = True
-
+            # rospy.sleep(2)
+            # nav_goal = True
             nav_goal = self.send_nav_goal(waypt)
 
             if nav_goal:

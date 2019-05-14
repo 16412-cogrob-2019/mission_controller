@@ -18,6 +18,7 @@ if __name__ == '__main__':
         tb_ns = [""]
 
     for tb in tb_ns:
+	print("Starting: "+ tb)
         TurtlebotServer(ns=tb)
 
     print("mission controller ready!")

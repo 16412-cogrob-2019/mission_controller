@@ -1,5 +1,5 @@
 activity_id: 0
 activity_name: "test_empty"
 samples: []
-x_vals: [1.44]
-y_vals: [-2.10]
+x_vals: []
+y_vals: []
